@@ -1,3 +1,7 @@
+<? 
+    session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,7 +58,7 @@
               <form action="/myboard/sign-inProc.php" method="post">
                 <div class="row">
                   <div class="form-group col-md-12 mb-4">
-                    <input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" placeholder="Username">
+                    <input type="email" class="form-control input-lg" name="user_id" id="user_id" aria-describedby="emailHelp" placeholder="Username">
                   </div>
 
                   <div class="form-group col-md-12 ">

@@ -1,3 +1,7 @@
+<? 
+    session_start();
+    include "dbClass.php";
+?>
 <!DOCTYPE html>
 <html lang="ko" dir="ltr">
   <head>
@@ -41,10 +45,14 @@
   </head>
 
   <body class="header-fixed sidebar-dark header-light" id="body">
-    <!-- <script>
-      NProgress.configure({ showSpinner: false });
-      NProgress.start();
-    </script> -->
+  <? 
+    $query = "select * from post where user_id=? ";
+    $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
+
+    $query2 = "select * from members where user_id=? ";
+    $result = $db->query($query2,$_SESSION['isLoginId'])->fetchAll();
+
+  ?> 
 
     <!-- ====================================
     ——— WRAPPER
@@ -81,22 +89,22 @@
 
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
-                    <form action="/myboard/index.php">
+                    <form action="index.php">
                         <button type="button" name="home" class="btn btn-flat"> go to home </button>
                     </form>
 
                   <!-- User Account -->
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                      <!-- <img src="assets/img/user/user.png" class="user-image" alt="User Image" /> -->
-                      <span class="d-none d-lg-inline-block">Abdus Salam</span>
+                      <?foreach($result as $data){ ?>
+                      <span class="d-none d-lg-inline-block"> <?=$data['name']?> <?}?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
-                        <!-- <img src="assets/img/user/user.png" class="img-circle" alt="User Image" /> -->
                         <div class="d-inline-block">
-                          Abdus Salam <small class="pt-1">iamabdus@gmail.com</small>
+                        <?foreach($result as $data){ ?>
+                          <?=$data['name']?> <?}?> <small class="pt-1"><?=$_SESSION['isLoginId']?></small>
                         </div>
                       </li>
 
@@ -107,8 +115,9 @@
                       </li>
                       <li class="right-sidebar-in">
                         <a href="post.php"> <i class="mdi mdi-settings"></i> 글쓰기 </a>
+                      </li>
                       <li class="dropdown-footer">
-                        <a href="index.php"> <i class="mdi mdi-logout"></i> Log Out </a>
+                        <a href="logOut.php"> <i class="mdi mdi-logout"></i> Log Out </a>
                       </li>
                     </ul>
                   </li>
@@ -121,57 +130,51 @@
           <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
-          <div class="content-wrapper">
-            <div class="content">		
+  <div class="content-wrapper">
+    <div class="content">		
                   <!-- Top Statistics -->
-                  <div class="card card-default">
+      <div class="card card-default">
 			<div class="card-header card-header-border-bottom">
 				<h2> Post </h2>
 			</div>
 
 			<div class="card-body">
-				<form>
-                    <div class="form-group">
+				<form action="postProc.php" method="post">
+          <div class="form-group">
 						<label for="exampleFormControlInput1"> TITLE </label>
-						<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요. ">
+						<input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="제목을 입력하세요. ">
 					</div>
-                    <div class="form-group">
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                Public/Secret
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Public</a>
-                                <a class="dropdown-item" href="#">Secret</a>
-                            </div>
-                        </div>
-                    </div>
+          <div class="form-group">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    Public/Secret
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="button" class="dropdown-item" onclick="public()">Public</a>
+                  <button type="button" class="dropdown-item" onclick="secret()">Secret</a>
+                </div>
+            </div>
+            <div id=Secret> </div>
+          </div>
 
 					<div class="form-group">
-						<textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+						<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="15"></textarea>
 					</div>
 
 					<div class="form-group">
 						<label for="exampleFormControlFile1"> Add File</label>
-						<input type="file" class="form-control-file" id="exampleFormControlFile1">
+						<input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
 					</div>
 
 					<div class="form-footer pt-4 pt-5 mt-4 border-top">
 						<button type="submit" class="btn btn-primary btn-default">Submit</button>
-						<button type="submit" class="btn btn-secondary btn-default">Cancel</button>
+						<a class="btn btn-secondary btn-default" href="#">Cancel</a>
 					</div>
 				</form>
 			</div>
 		</div>
-                    </div>
-                  </div>
-
-
-
-
-
-      </div> <!-- End Content -->
-    </div> <!-- End Content Wrapper -->
+  </div> <!-- End Content -->
+</div> <!-- End Content Wrapper -->
     
     
     <!-- Footer -->
@@ -225,3 +228,11 @@
 </body>
 </html>
 
+<script>
+  function public(){
+    Secret.innerHTML ="<input type=hidden name=cont_pwd>";
+  }
+  function secret() {
+  Secret.innerHTML = "<br> <input type=password class=border border-light name=cont_pwd id=cont_pwd placeholder= 비밀번호 >" ;
+  }
+</script>

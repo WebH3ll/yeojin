@@ -1,3 +1,7 @@
+<? 
+    session_start();
+    include "dbClass.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,39 +56,31 @@
             <div class="card-body p-5">
               <h4 class="text-dark mb-5">Sign Up</h4>
 
-              <form action="/myboard/sign-upProc.php" method="post">
+              <form action="sign-upProc.php" method="post">
                 <div class="row">
                   <div class="form-group col-md-12 mb-4">
                     <input type="text" class="form-control input-lg" name="name" id="name" aria-describedby="nameHelp" placeholder="Name">
                   </div>
 
                   <div class="form-group col-md-12 mb-4">
-                    <input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" placeholder="Username">
+                    <input type="email" class="form-control input-lg" name="user_id" id="user_id" aria-describedby="emailHelp" placeholder="Username">
+                  </div>
+
+                  <div class="form-group col-md-12 mb-4">
+                    <input type="tel" class="form-control input-lg" name="phone_num" id="phone_num" aria-describedby="phnoe_numHelp" placeholder="Phone Number">
                   </div>
 
                   <div class="form-group col-md-12 ">
                     <input type="password" class="form-control input-lg" name="pwd" id="password" placeholder="Password">
                   </div>
 
-                  <div class="form-group col-md-12 ">
-                    <input type="password" class="form-control input-lg" name="cpwd" id="cpassword" placeholder="Confirm Password">
-                  </div>
-
                   <div class="col-md-12">
-                    <div class="d-inline-block mr-3">
-                      <label class="control control-checkbox">
-                        <input type="checkbox" />
-                        <div class="control-indicator"></div>
-                        I Agree the terms and conditions
-                      </label>
-                    </div>
-
                     <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Sign Up</button>
 
                     <p>Already have an account?
-                      <a class="text-blue" href="/myboard/sign-in.php">Sign in</a>
+                      <a class="text-blue" href="sign-in.php">Sign in</a>
                     </p>
-                  </div>
+                  </div>  
                 </div>
               </form>
             </div>

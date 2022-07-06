@@ -1,16 +1,18 @@
 <? 
     session_start();
     include "dbClass.php";
+    include "lib.php";
 ?>
+
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
   
-    <title>User Profile</title>
+    <title>Ecommerce - Sleek Admin Dashboard Template</title>
     
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
@@ -22,11 +24,16 @@
     <link href="assets/plugins/nprogress/nprogress.css" rel="stylesheet" />
   
     <!-- No Extra plugin used -->
-    
+    <link href='assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css' rel='stylesheet'>
     <link href='assets/plugins/daterangepicker/daterangepicker.css' rel='stylesheet'>
+    
+    
 
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="assets/css/sleek.css" />
+  
+    <!-- FAVICON -->
+    <link href="assets/img/favicon.png" rel="shortcut icon" />
   
     <!--
       HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -39,20 +46,13 @@
     <script src="assets/plugins/nprogress/nprogress.js"></script>
   </head>
 
+  <body class="header-fixed sidebar-dark header-light" id="body">
   <? 
-    $query = "select * from post where user_id=? order by regdate desc";
-    $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
 
     $query2 = "select * from members where user_id=? ";
     $result = $db->query($query2,$_SESSION['isLoginId'])->fetchAll();
 
-?> 
-
-  <body class="header-fixed sidebar-dark header-light" id="body">
-    <script>
-      NProgress.configure({ showSpinner: false });
-      NProgress.start();
-    </script>
+  ?> 
 
     <!-- ====================================
     ——— WRAPPER
@@ -72,23 +72,27 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <div class="input-group">
-                  <button type="button" name="search" id="search-btn" class="btn btn-flat">
-                    <i class="mdi mdi-magnify"></i>
-                  </button>
+                <form action="/myboard/search.html" method="get">
+                 <div class="input-group" >
+                    <button type="button" name="search" id="search-btn" class="btn btn-flat">
+                       <i class="mdi mdi-magnify"></i>
+                    </button>            
                   <input type="text" name="query" id="search-input" class="form-control" placeholder=" search "
-                    autofocus autocomplete="off" />
-                </div>
-                <div id="search-results-container">
-                  <ul id="search-results"></ul>
-                </div>
+                    autofocus autocomplete="off">
+                  </div>
+                  <div id="search-results-container">
+                    <ul id="search-results"></ul>
+                  </div>
+                </form>
               </div>
+
 
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
-                  <form action="index.php">
-                      <button type="submit" name="home" class="btn btn-flat"> go to home </button>
-                  </form>
+                    <form action="index.php">
+                        <button type="submit" name="home" class="btn btn-flat"> go to home </button>
+                    </form>
+
                   <!-- User Account -->
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -126,131 +130,55 @@
           <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
-          <div class="content-wrapper">
-            <div class="content">
+  <div class="content-wrapper">
+    <div class="content">		
+                  <!-- Top Statistics -->
+      <div class="card card-default">
+			<div class="card-header card-header-border-bottom">
+				<h2> 글 </h2>
+			</div>
+            <?php
+                $idx = $_GET['idx'];
+                $query = "select * from post where idx='$idx' ";
+                $post = mysqli_query($connect,$query);
 
-
-
-
-
-<div class="bg-white border rounded">
-  <div class="row no-gutters">
-    <div class="col-lg-4 col-xl-3">
-      <div class="profile-content-left profile-left-spacing pt-5 pb-3 px-3 px-xl-5">
-        <div class="card text-center widget-profile px-0 border-0">
-          <div class="card-img mx-auto rounded-circle">
-            <img src="assets/img/user/u6.jpg" alt="user image">
-          </div>
-
-          <div class="card-body">
-            <?foreach($result as $data){ ?>
-            <h4 class="py-2 text-dark"> <?=$data['name']?> </h4> <? } ?>
-            <p> <?=$_SESSION['isLoginId']?></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-8 col-xl-9">
-      <div class="profile-content-right profile-right-spacing py-5">
-        <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Timeline</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
-          </li>
-        </ul>
-
-        <div class="tab-content px-3 px-xl-5" id="myTabContent">
-          <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-            <? foreach($list as $data){ ?>
-              <div class="media mt-5 profile-timeline-media timeline-media-spacing">
-              <div class="media-body">
-                <a href="#" onclick="editPost('<?=$data['idx']?>');">수정</a>
-                <a href="postdel.php?idx=<?=$data['idx']?>" onclick="return confirm('정말 삭제하시겠습니까?')";>삭제 </a>
-                <span class="float-right"> <?=$data['regdate']?> </span>
-                <p class='text-dark'> <?=$data['title']?>  </p>
-                <p> <?=nl2br($data['content'])?> </p> 
-              </div>
-              </div>
-              <hr>
-              <? } ?>
-          </div>
-
-
-          <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-            <div class="tab-pane-content mt-5">
-              <form>
-                <div class="form-group row mb-6">
-                  <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">User Image</label>
-                  <div class="col-sm-8 col-lg-10">
-                    <div class="custom-file mb-1">
-                      <input type="file" class="custom-file-input" id="coverImage" required>
-                      <label class="custom-file-label" for="coverImage">Choose file...</label>
-                      <div class="invalid-feedback">Example invalid custom file feedback</div>
-                    </div>
-                  </div>
+                while( $data = mysqli_fetch_array($post)) {?>
+			<div class="card-body">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1"> Title </label>
+                        <p type="text" class="form-control" name="title"> <?=$data['title']?> </p>
+                </div>
+                <div class="form-group">
+                    <? 
+                        if(!$data['cont_pwd']){?> 
+                        <button type="button" class="btn btn-primary">Public</a>
+                    <? }else{ ?> 
+                        <button type="button" class="btn btn-primary">Secret</a>
+                        <div id=Secret> </div>
+                    <? }?>
+                    
                 </div>
 
-                <div class="row mb-2">
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="firstName"> Name </label>
-                      <? foreach($result as $data){ ?>
-                      <input type="text" class="form-control" id="firstName" value="<?=$data['name']?>">
-                      <? } ?>
-                    </div>
-                  </div>
-                </div>
+					<div class="form-group">    
+						<p type="text" style="color: #495057; border: 1px solid #e6e9f1; border-radius: 0.25rem; padding: 0.59rem 1rem;" name="content" id="exampleFormControlTextarea1"> <?=nl2br($data['content'])?> </p>
+					</div>
 
-                <div class="form-group mb-4">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" value="<?=$_SESSION['isLoginId']?>">
-                </div>
+					<div class="form-group">
+						<label for="exampleFormControlFile1"> Add File</label>
+						<input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
+					</div>
+                    <form action="index.php">
+					<div class="form-footer pt-4 pt-5 mt-4 border-top">
+						<button type="submit" class="btn btn-primary btn-default">OK</button>
+						<a class="btn btn-secondary btn-default" href="#">Cancel</a>
+					</div>
+                    </form>
+                    <?}?>
 
-                <div class="form-group mb-4">
-                  <label for="oldPassword">Old password</label>
-                  <input type="password" class="form-control" id="oldPassword">
-                </div>
-
-                <div class="form-group mb-4">
-                  <label for="newPassword">New password</label>
-                  <input type="password" class="form-control" id="newPassword">
-                </div>
-
-                <div class="form-group mb-4">
-                  <label for="conPassword">Confirm password</label>
-                  <input type="password" class="form-control" id="conPassword">
-                </div>
-
-                <div class="d-flex justify-content-end mt-5">
-                  <button type="submit" class="btn btn-primary mb-2 btn-pill">Update Profile</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-      </div> <!-- End Content -->
-    </div> <!-- End Content Wrapper -->
+			</div>
+		</div>
+  </div> <!-- End Content -->
+</div> <!-- End Content Wrapper -->
     
     
     <!-- Footer -->
@@ -283,39 +211,20 @@
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/plugins/simplebar/simplebar.min.js"></script>
  
-    
-    
+    <script src='assets/plugins/charts/Chart.min.js'></script>
+    <script src='assets/js/chart.js'></script>
 
     
     
 
-    
-    
-    
+    <script src='assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js'></script>
+    <script src='assets/plugins/jvectormap/jquery-jvectormap-world-mill.js'></script>
+    <script src='assets/js/vector-map.js'></script>
 
     <script src='assets/plugins/daterangepicker/moment.min.js'></script>
     <script src='assets/plugins/daterangepicker/daterangepicker.js'></script>
     <script src='assets/js/date-range.js'></script>
 
-    
-
-    
-    
-    
-    
-
-    
-
-    
-
-    
-    
-    
-
-    
-    
-
-    
 
     <script src="assets/js/sleek.js"></script>
   <link href="assets/options/optionswitch.css" rel="stylesheet">
@@ -324,8 +233,10 @@
 </html>
 
 <script>
-    function editPost(idx){
-        location.href='postedit.php?idx='+idx;
-    }
-    
+  function public(){
+    Secret.innerHTML ="";
+  }
+  function secret() {
+  Secret.innerHTML = "<br> <input type=password class=border border-light name=cont_pwd id=cont_pwd placeholder= 비밀번호 >" ;
+  }
 </script>

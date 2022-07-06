@@ -1,3 +1,9 @@
+<? 
+    session_start();
+    include "dbClass.php";
+    include "lib.php";
+?>
+
 <!DOCTYPE html>
 <html lang="ko" dir="ltr">
   <head>
@@ -41,11 +47,19 @@
   </head>
 
   <body class="header-fixed sidebar-dark header-light" id="body">
-    <!-- <script>
-      NProgress.configure({ showSpinner: false });
-      NProgress.start();
-    </script> -->
 
+  <? 
+    $query = "select * from post where user_id=? ";
+    $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
+
+    $query2 = "select * from members where user_id=? ";
+    $result = $db->query($query2,$_SESSION['isLoginId'])->fetchAll();
+
+  ?> 
+
+  <? if(!isset($_SESSION['isLoginId'])) {
+        Header("Location: sign-in.php"); 
+      }else{ ?>
     <!-- ====================================
     ——— WRAPPER
     ===================================== -->
@@ -64,7 +78,7 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <form action="/myboard/search.html" method="post">
+                <form action="/myboard/search.php" method="post">
                  <div class="input-group" >
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
@@ -87,15 +101,15 @@
                   <!-- User Account -->
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                      <!-- <img src="assets/img/user/user.png" class="user-image" alt="User Image" /> -->
-                      <span class="d-none d-lg-inline-block">Abdus Salam</span>
+                      <?foreach($result as $data){ ?>
+                      <span class="d-none d-lg-inline-block"> <?=$data['name']?> <?}?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
-                        <!-- <img src="assets/img/user/user.png" class="img-circle" alt="User Image" /> -->
                         <div class="d-inline-block">
-                          Abdus Salam <small class="pt-1">iamabdus@gmail.com</small>
+                        <?foreach($result as $data){ ?>
+                          <?=$data['name']?> <?}?> <small class="pt-1"><?=$_SESSION['isLoginId']?></small>
                         </div>
                       </li>
 
@@ -106,8 +120,9 @@
                       </li>
                       <li class="right-sidebar-in">
                         <a href="post.php"> <i class="mdi mdi-settings"></i> 글쓰기 </a>
+                      </li>
                       <li class="dropdown-footer">
-                        <a href="index.php"> <i class="mdi mdi-logout"></i> Log Out </a>
+                        <a href="logOut.php"> <i class="mdi mdi-logout"></i> Log Out </a>
                       </li>
                     </ul>
                   </li>
@@ -126,20 +141,24 @@
                   <div class="row">
 
                   <? 
-                    for($i=0;$i<10;$i++){ ?>
+                    $query = "select * from post order by regdate desc";
+                    $result = mysqli_query($connect,$query);
+                   
+
+                    while( $data = mysqli_fetch_array($result)) { ?>
+                    
                       <div class="col-xl-3 col-sm-6">
                         <div class="card card-mini mb-4">
                           <div class="card-body">
-                            <h2 class="mb-1"> TITLE </h2>
-                            <p> username </p>
-                            <p> regdate </p>
-                            <br>
-                            <form action="look.php">
-                                <button type="submit" class="btn btn-primary btn-sm"> 보기 </button>
-                             </form>
+                            <h2 class="mb-1"> <?=$data['title']?> </h2>
+                            <p> <?=$data['user_id']?> </p>
+                            <p> <?=$data['regdate']?> </p>
+                            <br> 
+                            <button type="button" class="btn btn-light" onclick="chk_pwd('<?=$data['idx']?>', '<?=$data['cont_pwd']?>')"> 보기 </a>
                           </div>
                         </div>
                       </div>
+                     
                     <? } ?>
                   </div>
 
@@ -176,21 +195,30 @@
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/plugins/simplebar/simplebar.min.js"></script>
- 
-    <script src='assets/plugins/charts/Chart.min.js'></script>
-    <script src='assets/js/chart.js'></script>
-
-    <script src='assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js'></script>
-    <script src='assets/plugins/jvectormap/jquery-jvectormap-world-mill.js'></script>
-    <script src='assets/js/vector-map.js'></script>
-
-    <script src='assets/plugins/daterangepicker/moment.min.js'></script>
-    <script src='assets/plugins/daterangepicker/daterangepicker.js'></script>
-    <script src='assets/js/date-range.js'></script>
 
     <script src="assets/js/sleek.js"></script>
   <link href="assets/options/optionswitch.css" rel="stylesheet">
-<script src="assets/options/optionswitcher.js"></script>
+<script src="assets/options/optionswitcher.js"></script> 
 </body>
 </html>
 
+  <? }?> 
+  <script>
+    function chk_pwd(idx, pwd)
+    {
+      if(!pwd)
+      {
+        window.location="look.php?idx="+idx;
+      }
+      else
+      {
+        var in_pwd=prompt("비밀글입니다. 비밀번호를 입력하세요. ");
+
+        if(pwd == in_pwd){
+           window.location="look.php?idx="+idx; }
+        else{
+          alert("비밀번호가 틀렸습다. ");
+        }
+      }
+    }
+  </script>

@@ -179,10 +179,10 @@
               <? } ?>
           </div>
 
-
+         
           <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
             <div class="tab-pane-content mt-5">
-              <form>
+              <form action="editPwd.php" method="post">
                 <div class="form-group row mb-6">
                   <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">User Image</label>
                   <div class="col-sm-8 col-lg-10">
@@ -212,17 +212,17 @@
 
                 <div class="form-group mb-4">
                   <label for="oldPassword">Old password</label>
-                  <input type="password" class="form-control" id="oldPassword">
+                  <input type="password" name="oldPwd" class="form-control" id="oldPassword">
                 </div>
 
                 <div class="form-group mb-4">
                   <label for="newPassword">New password</label>
-                  <input type="password" class="form-control" id="newPassword">
+                  <input type="password" name="newPwd" class="form-control" id="newPassword">
                 </div>
 
                 <div class="form-group mb-4">
                   <label for="conPassword">Confirm password</label>
-                  <input type="password" class="form-control" id="conPassword">
+                  <input type="password" name="newPwdChk" class="form-control" id="conPassword">
                 </div>
 
                 <div class="d-flex justify-content-end mt-5">

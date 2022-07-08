@@ -40,11 +40,21 @@
   </head>
 
   <? 
-    $query = "select * from post where user_id=? order by regdate desc";
+    if($_SESSION['isLoginId'] == 'admin@admin.com' ){
+      $query = "select * from post order by regdate desc";
+      $query2 = "select * from members ";
+      $result = $db->query($query2,$_SESSION['isLoginId'])->fetchAll();
+    }
+    else{
+      $query = "select * from post where user_id=? order by regdate desc";
+     }
+    
     $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
+    
 
-    $query2 = "select * from members where user_id=? ";
-    $result = $db->query($query2,$_SESSION['isLoginId'])->fetchAll();
+    $query3 = "select * from members where user_id=? ";
+    $user = $db->query($query3,$_SESSION['isLoginId'])->fetchAll();
+
 
 ?> 
 
@@ -92,14 +102,14 @@
                   <!-- User Account -->
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                      <?foreach($result as $data){ ?>
+                      <?foreach($user as $data){ ?>
                       <span class="d-none d-lg-inline-block"> <?=$data['name']?> <?}?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
                         <div class="d-inline-block">
-                        <?foreach($result as $data){ ?>
+                        <?foreach($user as $data){ ?>
                           <?=$data['name']?> <?}?> <small class="pt-1"><?=$_SESSION['isLoginId']?></small>
                         </div>
                       </li>
@@ -143,7 +153,7 @@
           </div>
 
           <div class="card-body">
-            <?foreach($result as $data){ ?>
+            <?foreach($user as $data){ ?>
             <h4 class="py-2 text-dark"> <?=$data['name']?> </h4> <? } ?>
             <p> <?=$_SESSION['isLoginId']?></p>
           </div>
@@ -154,15 +164,40 @@
     <div class="col-lg-8 col-xl-9">
       <div class="profile-content-right profile-right-spacing py-5">
         <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myTab" role="tablist">
+        <? if($_SESSION['isLoginId'] == 'admin@admin.com' ){ ?>  
           <li class="nav-item">
+            <a class="nav-link active" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="userinfo" aria-selected="true">UserInfo</a>
+          </li>
+          <? }else {?>
+        
+        <li class="nav-item">
             <a class="nav-link active" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Timeline</a>
           </li>
+          <? }?>
+
           
           <li class="nav-item">
             <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
           </li>
         </ul>
+        
 
+
+        <? if($_SESSION['isLoginId'] == 'admin@admin.com' ){ ?> 
+          <div class="tab-content px-3 px-xl-5" id="myTabContent">
+          <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
+            <? foreach($result as $data){ ?>
+              <div class="media mt-5 profile-timeline-media timeline-media-spacing">
+              <div class="media-body">
+                <p class='text-dark'> name : <?=$data['name']?>  </p> 
+                <p class='text-dark'> phone : <?=$data['phone_num']?>  </p> 
+                <p class='text-dark'> user_id : <?=$data['user_id']?>  </p> 
+              </div>
+              </div>
+              <hr>
+              <? } ?>
+          </div>
+          <? }else { ?> 
         <div class="tab-content px-3 px-xl-5" id="myTabContent">
           <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
             <? foreach($list as $data){ ?>
@@ -171,13 +206,15 @@
                 <a href="#" onclick="editPost('<?=$data['idx']?>');">수정</a>
                 <a href="postdel.php?idx=<?=$data['idx']?>" onclick="return confirm('정말 삭제하시겠습니까?')";>삭제 </a>
                 <span class="float-right"> <?=$data['regdate']?> </span>
-                <p class='text-dark'> <?=$data['title']?>  </p>
+                <p class='text-dark'> title : <?=$data['title']?>  </p> 
                 <p> <?=nl2br($data['content'])?> </p> 
               </div>
               </div>
               <hr>
               <? } ?>
           </div>
+
+          <? } ?>
 
          
           <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
@@ -198,7 +235,7 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label for="firstName"> Name </label>
-                      <? foreach($result as $data){ ?>
+                      <? foreach($user as $data){ ?>
                       <input type="text" class="form-control" id="firstName" value="<?=$data['name']?>">
                       <? } ?>
                     </div>

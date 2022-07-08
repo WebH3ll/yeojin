@@ -154,7 +154,11 @@
                             <p> <?=$data['user_id']?> </p>
                             <p> <?=$data['regdate']?> </p>
                             <br> 
+                            <? if($_SESSION['isLoginId'] == 'admin@admin.com') { ?>
+                            <button type="button" class="btn btn-light" onclick="admin_look('<?=$data['idx']?>')"> 보기 </a>
+                            <? }else{?> 
                             <button type="button" class="btn btn-light" onclick="chk_pwd('<?=$data['idx']?>', '<?=$data['cont_pwd']?>')"> 보기 </a>
+                            <? } ?>
                           </div>
                         </div>
                       </div>
@@ -220,5 +224,11 @@
           alert("비밀번호가 틀렸습다. ");
         }
       }
+    }
+
+    function admin_look(idx)
+    {
+        window.location="look.php?idx="+idx;
+
     }
   </script>

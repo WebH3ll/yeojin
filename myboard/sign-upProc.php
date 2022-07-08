@@ -14,9 +14,11 @@
     $data[]=$user_id;
     $data[]=$pwd;
 
-    $query = "insert into members(name,phone_num,user_id,pwd) values('$name','$phone_num','$user_id',password('$pwd'))";
-    echo $query;
+    $query = "insert into members(name,phone_num,user_id,pwd) values('$name','$phone_num','$user_id','$pwd')";
     
     mysqli_query($connect, $query); 
+
+    Header("Location: index.php");
 ?>
+
 

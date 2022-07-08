@@ -8,6 +8,7 @@
     $user_id = $_POST['user_id'];
     $pwd = $_POST['pwd'];
 
+
     $query = "select * from members where user_id='$user_id'";
     $result = mysqli_query($connect, $query);
     $data = mysqli_fetch_array($result);
@@ -30,8 +31,9 @@
         alert('등록된 정보가 없습니다 ');
         history.back(1);
     </script>
-        
+            
     <? }
+
 
     $_SESSION['isLoginId'] = $user_id;
 

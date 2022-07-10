@@ -1,4 +1,6 @@
-<? 
+
+<?php 
+
     session_start();
     include "dbClass.php";
     include "lib.php";
@@ -75,15 +77,15 @@
               <!-- Sidebar toggle button -->
               <button id="sidebar-toggler" class="sidebar-toggle">
                 <span class="sr-only">Toggle navigation</span>
-              </button> 
+              </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <form action="search.php" method="post">
+                <form action="iPsearch.php" method="post">
                  <div class="input-group" >
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
                     </button>            
-                  <input type="text" name="search" id="search-input" class="form-control" placeholder=" search "
+                  <input type="text" name="ipSearch" id="search-input" class="form-control" placeholder=" URL "
                     autofocus autocomplete="off">
                   </div>
                   <div id="search-results-container">
@@ -95,9 +97,6 @@
 
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
-                  <form action="ipSearch.php">
-                    <button type="submit" class="btn btn-flat"> IP search </button>
-                  </form>
                   <form action="index.php">
                     <button type="submit" class="btn btn-flat"> go to home </button>
                   </form>
@@ -141,32 +140,23 @@
           <div class="content-wrapper">
             <div class="content">		
                   <!-- Top Statistics -->
-                  <div class="row">
-
-                  <? 
-                    $query = "select * from post order by regdate desc";
-                    $result = mysqli_query($connect,$query);
-                   
-
-                    while( $data = mysqli_fetch_array($result)) { ?>
-                    
-                      <div class="col-xl-3 col-sm-6">
+                  <div class="row">                     
+                        <div class="col-xl-12 col-sm-12">
                         <div class="card card-mini mb-4">
-                          <div class="card-body">
-                            <h2 class="mb-1"> <?=$data['title']?> </h2>
-                            <p> <?=$data['user_id']?> </p>
-                            <p> <?=$data['regdate']?> </p>
-                            <br> 
-                            <? if($_SESSION['isLoginId'] == 'admin@admin.com') { ?>
-                            <button type="button" class="btn btn-light" onclick="admin_look('<?=$data['idx']?>')"> 보기 </a>
-                            <? }else{?> 
-                            <button type="button" class="btn btn-light" onclick="chk_pwd('<?=$data['idx']?>', '<?=$data['cont_pwd']?>')"> 보기 </a>
-                            <? } ?>
-                          </div>
+                            <div class="card-body">
+                                <h2 class="mb-1"> <?=$_POST['ipSearch']?> </h2>
+                            </div>   
                         </div>
-                      </div>
-                     
-                    <? } ?>
+                        </div>
+                        <div class="col-xl-12 col-sm-12">
+                            <div class="card-body">
+                                <? 
+                                 $domain = $_POST['ipSearch'];
+                                 $res = shell_exec("nslookup $domain");
+                                ?>
+                                <pre>.<?=$res?>.</pre>
+                            </div>
+                        </div>
                   </div>
 
       </div> <!-- End Content -->
@@ -210,28 +200,5 @@
 </html>
 
   <? }?> 
-  <script>
-    function chk_pwd(idx, pwd)
-    {
-      if(!pwd)
-      {
-        window.location="look.php?idx="+idx;
-      }
-      else
-      {
-        var in_pwd=prompt("비밀글입니다. 비밀번호를 입력하세요. ");
 
-        if(pwd == in_pwd){
-           window.location="look.php?idx="+idx; }
-        else{
-          alert("비밀번호가 틀렸습다. ");
-        }
-      }
-    }
-
-    function admin_look(idx)
-    {
-        window.location="look.php?idx="+idx;
-
-    }
-  </script>
+    

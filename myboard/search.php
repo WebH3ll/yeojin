@@ -1,7 +1,16 @@
-<? 
+<?php 
+
+    include "lib.php";
+
+    $search = $_POST['search'];
+
+    
+    
     session_start();
     include "dbClass.php";
+    include "lib.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="ko" dir="ltr">
   <head>
@@ -10,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
   
-    <title>Ecommerce - Sleek Admin Dashboard Template</title>
+    <title> 여진이의 게시판 </title>
     
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
@@ -45,6 +54,7 @@
   </head>
 
   <body class="header-fixed sidebar-dark header-light" id="body">
+
   <? 
     $query = "select * from post where user_id=? ";
     $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
@@ -54,6 +64,9 @@
 
   ?> 
 
+  <? if(!isset($_SESSION['isLoginId'])) {
+        Header("Location: sign-in.php"); 
+      }else{ ?>
     <!-- ====================================
     ——— WRAPPER
     ===================================== -->
@@ -77,7 +90,7 @@
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
                     </button>            
-                  <input type="text" name="search" id="search-input" class="form-control" placeholder=" search "
+                  <input type="text" name="search" id="search-input" class="form-control" placeholder="<?=$search?> "
                     autofocus autocomplete="off">
                   </div>
                   <div id="search-results-container">
@@ -85,14 +98,13 @@
                   </div>
                 </form>
               </div>
-
+            
 
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
-                    <form action="index.php">
-                        <button type="button" name="home" class="btn btn-flat"> go to home </button>
-                    </form>
-
+                  <form action="index.php">
+                    <button type="submit" class="btn btn-flat"> go to home </button>
+                  </form>
                   <!-- User Account -->
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -130,51 +142,38 @@
           <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
-  <div class="content-wrapper">
-    <div class="content">		
+          <div class="content-wrapper">
+            <div class="content">		
                   <!-- Top Statistics -->
-      <div class="card card-default">
-			<div class="card-header card-header-border-bottom">
-				<h2> Post </h2>
-			</div>
+                  <div class="row">
 
-			<div class="card-body">
-				<form action="postProc.php" enctype="multipart/form-data" method="post">
-          <div class="form-group">
-						<label for="exampleFormControlInput1"> TITLE </label>
-						<input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="제목을 입력하세요. ">
-					</div>
-          <div class="form-group">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                    Public/Secret
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <button type="button" class="dropdown-item" onclick="public()">Public</a>
-                  <button type="button" class="dropdown-item" onclick="secret()">Secret</a>
-                </div>
-            </div>
-            <div id=Secret> </div>
-          </div>
+                  <? 
+                    $query = "select * from post order by regdate desc"; 
+                    $result = mysqli_query($connect,$query);                                 
 
-					<div class="form-group">
-						<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="15"></textarea>
-					</div>
+                    while( $data = mysqli_fetch_array($result)) { 
+                        if(preg_match("/{$search}/i", $data['title'])){ ?> 
+                            <div class="col-xl-3 col-sm-6">
+                                <div class="card card-mini mb-4">
+                                <div class="card-body">
+                                    <h2 class="mb-1"> <?=$data['title']?> </h2>
+                                    <p> <?=$data['user_id']?> </p>
+                                    <p> <?=$data['regdate']?> </p>
+                                    <br> 
+                                    <? if($_SESSION['isLoginId'] == 'admin@admin.com') { ?>
+                                    <button type="button" class="btn btn-light" onclick="admin_look('<?=$data['idx']?>')"> 보기 </a>
+                                    <? }else{?> 
+                                    <button type="button" class="btn btn-light" onclick="chk_pwd('<?=$data['idx']?>', '<?=$data['cont_pwd']?>')"> 보기 </a>
+                                    <? } ?>
+                                </div>
+                                </div>
+                            </div>
+                        <? }                 
+                     } ?>
+                  </div>
 
-					<div class="form-group">
-						<label for="exampleFormControlFile1"> Add File</label>
-						<input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
-					</div>
-
-					<div class="form-footer pt-4 pt-5 mt-4 border-top">
-						<button type="submit" class="btn btn-primary btn-default">Submit</button>
-						<a class="btn btn-secondary btn-default" href="#">Cancel</a>
-					</div>
-				</form>
-			</div>
-		</div>
-  </div> <!-- End Content -->
-</div> <!-- End Content Wrapper -->
+      </div> <!-- End Content -->
+    </div> <!-- End Content Wrapper -->
     
     
     <!-- Footer -->
@@ -206,33 +205,38 @@
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/plugins/simplebar/simplebar.min.js"></script>
- 
-    <script src='assets/plugins/charts/Chart.min.js'></script>
-    <script src='assets/js/chart.js'></script>
-
-    
-    
-
-    <script src='assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js'></script>
-    <script src='assets/plugins/jvectormap/jquery-jvectormap-world-mill.js'></script>
-    <script src='assets/js/vector-map.js'></script>
-
-    <script src='assets/plugins/daterangepicker/moment.min.js'></script>
-    <script src='assets/plugins/daterangepicker/daterangepicker.js'></script>
-    <script src='assets/js/date-range.js'></script>
-
 
     <script src="assets/js/sleek.js"></script>
   <link href="assets/options/optionswitch.css" rel="stylesheet">
-<script src="assets/options/optionswitcher.js"></script>
+<script src="assets/options/optionswitcher.js"></script> 
 </body>
 </html>
 
-<script>
-  function public(){
-    Secret.innerHTML ="<input type=hidden name=cont_pwd>";
-  }
-  function secret() {
-  Secret.innerHTML = "<br> <input type=password class=border border-light name=cont_pwd id=cont_pwd placeholder= 비밀번호 >" ;
-  }
-</script>
+  <? }?> 
+  <script>
+    function chk_pwd(idx, pwd)
+    {
+      if(!pwd)
+      {
+        window.location="look.php?idx="+idx;
+      }
+      else
+      {
+        var in_pwd=prompt("비밀글입니다. 비밀번호를 입력하세요. ");
+
+        if(pwd == in_pwd){
+           window.location="look.php?idx="+idx; }
+        else{
+          alert("비밀번호가 틀렸습다. ");
+        }
+      }
+    }
+
+    function admin_look(idx)
+    {
+        window.location="look.php?idx="+idx;
+
+    }
+  </script>
+
+    

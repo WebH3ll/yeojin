@@ -72,12 +72,12 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <form action="/myboard/search.html" method="get">
+                <form action="search.php" method="post">
                  <div class="input-group" >
-                    <button type="button" name="search" id="search-btn" class="btn btn-flat">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
                     </button>            
-                  <input type="text" name="query" id="search-input" class="form-control" placeholder=" search "
+                  <input type="text" name="search" id="search-input" class="form-control" placeholder=" search "
                     autofocus autocomplete="off">
                   </div>
                   <div id="search-results-container">
@@ -164,10 +164,11 @@
 					</div>
 
 					<div class="form-group">
-						<label for="exampleFormControlFile1"> Add File</label>
-						<input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
+            <p>  파일 </p>
+						<p class="file"> <a href="upload/<?=$data['filename']?>" download> <?=$data['filename'];?> </a> </p>
 					</div>
-                    <form action="index.php">
+                      
+            <form action="index.php">
 					<div class="form-footer pt-4 pt-5 mt-4 border-top">
 						<button type="submit" class="btn btn-primary btn-default">OK</button>
 						<a class="btn btn-secondary btn-default" href="#">Cancel</a>

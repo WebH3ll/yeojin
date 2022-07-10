@@ -78,12 +78,12 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <form action="/myboard/search.php" method="post">
+                <form action="search.php" method="post">
                  <div class="input-group" >
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
                     </button>            
-                  <input type="text" name="query" id="search-input" class="form-control" placeholder=" search "
+                  <input type="text" name="search" id="search-input" class="form-control" placeholder=" search "
                     autofocus autocomplete="off">
                   </div>
                   <div id="search-results-container">
@@ -95,7 +95,7 @@
 
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
-                  <form action="/myboard/index.php">
+                  <form action="index.php">
                     <button type="submit" class="btn btn-flat"> go to home </button>
                   </form>
                   <!-- User Account -->

@@ -82,16 +82,18 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <div class="input-group">
-                  <button type="button" name="search" id="search-btn" class="btn btn-flat">
-                    <i class="mdi mdi-magnify"></i>
-                  </button>
-                  <input type="text" name="query" id="search-input" class="form-control" placeholder=" search "
-                    autofocus autocomplete="off" />
-                </div>
-                <div id="search-results-container">
-                  <ul id="search-results"></ul>
-                </div>
+                <form action="search.php" method="post">
+                 <div class="input-group" >
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                       <i class="mdi mdi-magnify"></i>
+                    </button>            
+                  <input type="text" name="search" id="search-input" class="form-control" placeholder=" search "
+                    autofocus autocomplete="off">
+                  </div>
+                  <div id="search-results-container">
+                    <ul id="search-results"></ul>
+                  </div>
+                </form>
               </div>
 
               <div class="navbar-right ">

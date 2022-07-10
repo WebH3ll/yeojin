@@ -90,7 +90,7 @@
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
                     <form action="index.php">
-                        <button type="button" name="home" class="btn btn-flat"> go to home </button>
+                        <button type="submit" name="home" class="btn btn-flat"> go to home </button>
                     </form>
 
                   <!-- User Account -->

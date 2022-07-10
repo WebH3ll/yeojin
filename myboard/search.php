@@ -3,7 +3,9 @@
     include "lib.php";
 
     $search = $_POST['search'];
-
+    if($search == ""){
+      Header("Location: index.php");
+    }
     
     
     session_start();

@@ -80,7 +80,7 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <form action="iPsearch.php" method="post">
+                <form action="ipSearch.php" method="post">
                  <div class="input-group" >
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
@@ -137,9 +137,11 @@
           <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
+          
           <div class="content-wrapper">
             <div class="content">		
                   <!-- Top Statistics -->
+                  <?php if($_POST['ipSearch']) { ?>
                   <div class="row">                     
                         <div class="col-xl-12 col-sm-12">
                         <div class="card card-mini mb-4">
@@ -158,9 +160,11 @@
                             </div>
                         </div>
                   </div>
+                  <?} ?>
 
       </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+
     
     
     <!-- Footer -->

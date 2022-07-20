@@ -1,4 +1,4 @@
-<?
+<?php
     session_start();
     include "dbClass.php";
     include "lib.php";

@@ -1,9 +1,9 @@
-<? 
+<?php 
     session_start();
     include "dbClass.php";
 ?>
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -42,15 +42,14 @@
   <? 
     if($_SESSION['isLoginId'] == 'admin@admin.com' ){
       $query = "select * from post order by regdate desc";
+      $list = $db->query($query)->fetchAll();
       $query2 = "select * from members ";
-      $result = $db->query($query2,$_SESSION['isLoginId'])->fetchAll();
+      $result = $db->query($query2)->fetchAll();
     }
     else{
       $query = "select * from post where user_id=? order by regdate desc";
+      $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
      }
-    
-    $list = $db->query($query,$_SESSION['isLoginId'])->fetchAll();
-    
 
     $query3 = "select * from members where user_id=? ";
     $user = $db->query($query3,$_SESSION['isLoginId'])->fetchAll();
@@ -151,7 +150,7 @@
       <div class="profile-content-left profile-left-spacing pt-5 pb-3 px-3 px-xl-5">
         <div class="card text-center widget-profile px-0 border-0">
           <div class="card-img mx-auto rounded-circle">
-            <img src="assets/img/user/u6.jpg" alt="user image">
+            <img src="assets/img/푸앙이 (2).jpeg" alt="user image">
           </div>
 
           <div class="card-body">
@@ -185,10 +184,10 @@
         
 
 
-        <? if($_SESSION['isLoginId'] == 'admin@admin.com' ){ ?> 
+        <?php if($_SESSION['isLoginId'] == 'admin@admin.com' ){ ?> 
           <div class="tab-content px-3 px-xl-5" id="myTabContent">
           <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-            <? foreach($result as $data){ ?>
+            <?php foreach($result as $data){ ?>
               <div class="media mt-5 profile-timeline-media timeline-media-spacing">
               <div class="media-body">
                 <p class='text-dark'> name : <?=$data['name']?>  </p> 
@@ -222,7 +221,7 @@
           <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
             <div class="tab-pane-content mt-5">
               <form action="editPwd.php" method="post">
-                <div class="form-group row mb-6">
+                <!-- <div class="form-group row mb-6">
                   <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">User Image</label>
                   <div class="col-sm-8 col-lg-10">
                     <div class="custom-file mb-1">
@@ -231,7 +230,7 @@
                       <div class="invalid-feedback">Example invalid custom file feedback</div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="row mb-2">
                   <div class="col-lg-6">

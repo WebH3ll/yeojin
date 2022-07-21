@@ -168,7 +168,7 @@
 
 					<div class="form-footer pt-4 pt-5 mt-4 border-top">
 						<button type="submit" class="btn btn-primary btn-default">Submit</button>
-						<a class="btn btn-secondary btn-default" href="#">Cancel</a>
+						<a class="btn btn-secondary btn-default" href="index.php">Cancel</a>
 					</div>
 				</form>
 			</div>

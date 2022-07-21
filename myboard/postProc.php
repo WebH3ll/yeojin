@@ -13,6 +13,7 @@
     $filename = $_FILES['file']['name'];
     $folder = "upload/".$filename;
 
+
     $data[] = $_SESSION['isLoginId'];
     $data[] = $_POST['title'];
     $data[] = $_POST['content'];
@@ -32,6 +33,8 @@
     }
 
     $upload_result = move_uploaded_file($tmpfile, $folder);
+    // move_uploaded_file($tmpfile, $folder);
+
 
     $query = 'insert into post(user_id,title,content,cont_pwd,filename,regdate) values(?,?,?,?,?,?) ';
     $db->query($query, $data);

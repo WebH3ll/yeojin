@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
   
-    <title> 여진이의 게시판 </title>
+    <title> 여진이의 게시판🫶🏻 </title>
     
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
@@ -80,7 +80,7 @@
               </button>
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
-                <form action="iPsearch.php" method="post">
+                <form action="ipSearch.php" method="post">
                  <div class="input-group" >
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                        <i class="mdi mdi-magnify"></i>
@@ -137,9 +137,11 @@
           <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
+          
           <div class="content-wrapper">
             <div class="content">		
                   <!-- Top Statistics -->
+                  <?php if($_POST['ipSearch']) { ?>
                   <div class="row">                     
                         <div class="col-xl-12 col-sm-12">
                         <div class="card card-mini mb-4">
@@ -158,9 +160,11 @@
                             </div>
                         </div>
                   </div>
+                  <?} ?>
 
       </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+
     
     
     <!-- Footer -->

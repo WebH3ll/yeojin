@@ -165,13 +165,13 @@
 
 					<div class="form-group">
             <p>  파일 </p>
-						<p class="file"> <a href="upload/<?=$data['filename']?>" download> <?=$data['filename'];?> </a> </p>
+						<p class="file"> <a href="http://54.183.97.213/myboard/upload/<?=$data['filename']?>" download> <?=$data['filename'];?> </a> </p>
 					</div>
                       
             <form action="index.php">
 					<div class="form-footer pt-4 pt-5 mt-4 border-top">
 						<button type="submit" class="btn btn-primary btn-default">OK</button>
-						<a class="btn btn-secondary btn-default" href="#">Cancel</a>
+						<a class="btn btn-secondary btn-default" href="index.php">Cancel</a>
 					</div>
                     </form>
                     <?}?>

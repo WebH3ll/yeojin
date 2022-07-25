@@ -5,3 +5,6 @@
 /webhell : 템플릿 안쓰고 부트스트랩 연습
 
 /myboard : ★웹사이트
+
+# My Server
+http://54.183.97.213

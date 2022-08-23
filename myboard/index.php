@@ -32,8 +32,8 @@
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="assets/css/sleek.css" />
   
-    <!-- FAVICON -->
-    <link href="assets/img/favicon.png" rel="shortcut icon" />
+    <!-- PUANG IMG -->
+    <link href="assets/img/puangfire.png" rel="shortcut icon" />
   
     <!--
       HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries

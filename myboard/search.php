@@ -35,9 +35,8 @@
     <link href='assets/plugins/daterangepicker/daterangepicker.css' rel='stylesheet'>
     
     
-
-    <!-- SLEEK CSS -->
-    <link id="sleek-css" rel="stylesheet" href="assets/css/sleek.css" />
+    <!-- PUANG IMG -->
+    <link href="assets/img/puangfire.png" rel="shortcut icon" />
   
     <!-- FAVICON -->
     <link href="assets/img/favicon.png" rel="shortcut icon" />

@@ -27,13 +27,12 @@
     <link href='assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css' rel='stylesheet'>
     <link href='assets/plugins/daterangepicker/daterangepicker.css' rel='stylesheet'>
     
-    
+    <!-- SLEEK CSS -->
+    <link id="sleek-css" rel="stylesheet" href="assets/css/sleek.css" />
 
     <!-- PUANG IMG -->
     <link href="assets/img/puangfire.png" rel="shortcut icon" />
-  
-    <!-- FAVICON -->
-    <link href="assets/img/favicon.png" rel="shortcut icon" />
+ 
   
     <!--
       HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries

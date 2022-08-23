@@ -161,6 +161,8 @@
             <h4 class="py-2 text-dark"> <?=$data['name']?> </h4> <? } ?>
             <p> <?=$_SESSION['isLoginId']?></p>
           </div>
+          <a href="userdel.php?idx=<?=$data['idx']?>" > 계정 삭제 </a>
+
         </div>
       </div>
     </div>
@@ -322,41 +324,11 @@
     <!-- Javascript -->
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/plugins/simplebar/simplebar.min.js"></script>
- 
-    
-    
-
-    
-    
-
-    
-    
-    
+    <script src="assets/plugins/simplebar/simplebar.min.js"></script> 
 
     <script src='assets/plugins/daterangepicker/moment.min.js'></script>
     <script src='assets/plugins/daterangepicker/daterangepicker.js'></script>
     <script src='assets/js/date-range.js'></script>
-
-    
-
-    
-    
-    
-    
-
-    
-
-    
-
-    
-    
-    
-
-    
-    
-
-    
 
     <script src="assets/js/sleek.js"></script>
   <link href="assets/options/optionswitch.css" rel="stylesheet">

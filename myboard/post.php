@@ -139,7 +139,8 @@
 			</div>
 
 			<div class="card-body">
-				<form action="postProc.php" enctype="multipart/form-data" method="post" onsubmit="return formSubmit(this);">
+				<!-- <form action="postProc.php" enctype="multipart/form-data" method="post" onsubmit="return formSubmit(this);"> -->
+        <form action="postProc.php" enctype="multipart/form-data" method="post">
           <div class="form-group">
 						<label for="exampleFormControlInput1"> TITLE </label>
 						<input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="제목을 입력하세요. ">
@@ -236,12 +237,8 @@
 
     var path = document.getElementById("file").value;
     var pos = path.indexOf(".");
-    if(pos < 0) {
-      alert("확장자가 없는 파일 입니다.");
-      return false;
-    }
-
-    var ext = path.slice(path.indexOf(".") + 1).toLowerCase();
+    if(pos >= 0) {
+      var ext = path.slice(path.indexOf(".") + 1).toLowerCase();
     var checkExt = false;
     for(var i = 0; i < extArray.length; i++) {
       if(ext == extArray[i]) {
@@ -254,6 +251,9 @@
       alert("업로드 할 수 없는 파일 확장자 입니다.");
       return false;
     }
+    }
+
+    
 
     return true;
   }

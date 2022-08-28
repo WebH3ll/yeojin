@@ -17,7 +17,7 @@
     $allowed_extensions = explode(',', $ext_str);
     $ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
 
-    if(!in_array($ext, $allowed_extensions)) { ?>
+    if($filename != "" && !in_array($ext, $allowed_extensions)) { ?>
         <script>
         alert('pdf,jpg,png,jpeg 파일만 업로드 할 수 있습니다'); 
         history.back(1);

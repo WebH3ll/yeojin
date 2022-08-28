@@ -162,7 +162,8 @@
 					</div>
 
 					<div class="form-group">
-						<label for="exampleFormControlFile1"> Add File</label>
+						<label for="exampleFormControlFile1"> Add File </label>
+            <a> (pdf, jpg, jpeg, png) </a>
 						<input type="file" class="form-control-file" name="file" id="file">
 					</div>
 

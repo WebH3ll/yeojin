@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
   
-    <title>Ecommerce - Sleek Admin Dashboard Template</title>
+    <title> Post </title>
     
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
@@ -139,7 +139,7 @@
 			</div>
 
 			<div class="card-body">
-				<form action="postProc.php" enctype="multipart/form-data" method="post">
+				<form action="postProc.php" enctype="multipart/form-data" method="post" onsubmit="return formSubmit(this);">
           <div class="form-group">
 						<label for="exampleFormControlInput1"> TITLE </label>
 						<input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="제목을 입력하세요. ">
@@ -163,7 +163,7 @@
 
 					<div class="form-group">
 						<label for="exampleFormControlFile1"> Add File</label>
-						<input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
+						<input type="file" class="form-control-file" name="file" id="file">
 					</div>
 
 					<div class="form-footer pt-4 pt-5 mt-4 border-top">
@@ -195,13 +195,6 @@
   </div> <!-- End Wrapper -->
 
 
-    <!-- <script type="module">
-      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-
-      const el = document.createElement('pwa-update');
-      document.body.appendChild(el);
-    </script> -->
-
     <!-- Javascript -->
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -232,7 +225,35 @@
   function public(){
     Secret.innerHTML ="<input type=hidden name=cont_pwd>";
   }
+
   function secret() {
   Secret.innerHTML = "<br> <input type=password class=border border-light name=cont_pwd id=cont_pwd placeholder= 비밀번호 >" ;
+  }
+  
+  function formSubmit(f) {
+    var extArray = new Array('pdf','jpg','jpeg','png');
+
+    var path = document.getElementById("file").value;
+    var pos = path.indexOf(".");
+    if(pos < 0) {
+      alert("확장자가 없는 파일 입니다.");
+      return false;
+    }
+
+    var ext = path.slice(path.indexOf(".") + 1).toLowerCase();
+    var checkExt = false;
+    for(var i = 0; i < extArray.length; i++) {
+      if(ext == extArray[i]) {
+        checkExt = true;
+        break;
+      }
+    }
+
+    if(checkExt == false) {
+      alert("업로드 할 수 없는 파일 확장자 입니다.");
+      return false;
+    }
+
+    return true;
   }
 </script>

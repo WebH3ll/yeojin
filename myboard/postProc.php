@@ -13,31 +13,44 @@
     $filename = $_FILES['file']['name'];
     $folder = "upload/".$filename;
 
+    $ext_str = "pdf,jpg,png,jpeg"; 
+    $allowed_extensions = explode(',', $ext_str);
+    $ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
 
-    $data[] = $_SESSION['isLoginId'];
-    $data[] = $_POST['title'];
-    $data[] = $_POST['content'];
-    $data[] = $_POST['cont_pwd'];
-    $data[] = $filename;
-    $data[] = date("Y-m-d H:i:s");
+    if(!in_array($ext, $allowed_extensions)) { ?>
+        <script>
+        alert('pdf,jpg,png,jpeg 파일만 업로드 할 수 있습니다'); 
+        history.back(1);
+        </script>
+
+    <? 
+     }
+    else {
+        $data[] = $_SESSION['isLoginId'];
+        $data[] = $_POST['title'];
+        $data[] = $_POST['content'];
+        $data[] = $_POST['cont_pwd'];
+        $data[] = $filename;
+        $data[] = date("Y-m-d H:i:s");
 
 
-    if( $error != UPLOAD_ERR_OK ){
-        switch( $error ) {
-                case UPLOAD_ERR_INI_SIZE:
-                case UPLOAD_ERR_FORM_SIZE:
-                    echo "<script>alert('파일이 너무 큽니다.');";
-                        echo "window.history.back()</script>";
-                        exit;
+        if( $error != UPLOAD_ERR_OK ){
+            switch( $error ) {
+                    case UPLOAD_ERR_INI_SIZE:
+                    case UPLOAD_ERR_FORM_SIZE:
+                        echo "<script>alert('파일이 너무 큽니다.');";
+                            echo "window.history.back()</script>";
+                            exit;
+            }
         }
-    }
 
-    $upload_result = move_uploaded_file($tmpfile, $folder);
-    // move_uploaded_file($tmpfile, $folder);
+        $upload_result = move_uploaded_file($tmpfile, $folder);
+        // move_uploaded_file($tmpfile, $folder);
 
 
-    $query = 'insert into post(user_id,title,content,cont_pwd,filename,regdate) values(?,?,?,?,?,?) ';
-    $db->query($query, $data);
+        $query = 'insert into post(user_id,title,content,cont_pwd,filename,regdate) values(?,?,?,?,?,?) ';
+        $db->query($query, $data);
 
-    
-    Header("Location: index.php");
+        
+        Header("Location: index.php");
+    }   

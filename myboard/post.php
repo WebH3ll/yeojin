@@ -139,8 +139,8 @@
 			</div>
 
 			<div class="card-body">
-				<!-- <form action="postProc.php" enctype="multipart/form-data" method="post" onsubmit="return formSubmit(this);"> -->
-        <form action="postProc.php" enctype="multipart/form-data" method="post">
+				<form action="postProc.php" enctype="multipart/form-data" method="post" onsubmit="return formSubmit(this);">
+        <!-- <form action="postProc.php" enctype="multipart/form-data" method="post"> -->
           <div class="form-group">
 						<label for="exampleFormControlInput1"> TITLE </label>
 						<input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="제목을 입력하세요. ">

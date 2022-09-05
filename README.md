@@ -36,3 +36,7 @@ http://18.144.172.56
 - ⭐ - [풀이](https://mirage-cobweb-874.notion.site/ddfa04b1c90a4df987306e7553a0c594)
 - ⭐️⭐️ - [풀이](https://mirage-cobweb-874.notion.site/2034acc8d2db4bb4851974b3439a3d9a)
 - ⭐️⭐️⭐️ - [풀이](https://mirage-cobweb-874.notion.site/865ca131fe6142e3ac0fa46e546d9853)
+
+# 4️⃣ WEB - ADVANCED
+- 업로드 필터링 
+  (우회하고 싶었지만 우회 방법을 찾지 못했다 .....)
